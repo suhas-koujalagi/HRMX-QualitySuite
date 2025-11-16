@@ -1,0 +1,8 @@
+<!DOCTYPE suite  >
+<suite name="OrangeHRM Test Suite">
+    <test name="AllTests">
+        <classes>
+        </classes>
+    </test>
+</suite>
+
