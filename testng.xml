@@ -1,8 +1,14 @@
-<!DOCTYPE suite  >
-<suite name="OrangeHRM Test Suite">
-    <test name="AllTests">
-        <classes>
-        </classes>
-    </test>
-</suite>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite >
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="com.ssk.orangehrm.tests.AdminUserTests"/>
+      <class name="com.ssk.orangehrm.tests.RecruitmentTests"/>
+      <class name="com.ssk.orangehrm.tests.LoginTests"/>
+      <class name="com.ssk.orangehrm.tests.PIMTests"/>
+      <class name="com.ssk.orangehrm.tests.LeaveTests"/>
+      <class name="com.ssk.orangehrm.base.SetupTest"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

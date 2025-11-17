@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <test thread-count="5" name="Test(failed)">
+    <classes>
+      <class name="com.ssk.orangehrm.tests.LeaveTests">
+        <methods>
+          <include name="applyLeaveTest"/>
+        </methods>
+      </class> <!-- com.ssk.orangehrm.tests.LeaveTests -->
+      <class name="com.ssk.orangehrm.tests.PIMTests">
+        <methods>
+          <include name="addEmployeeTest"/>
+          <include name="searchEmployeeTest"/>
+        </methods>
+      </class> <!-- com.ssk.orangehrm.tests.PIMTests -->
+      <class name="com.ssk.orangehrm.tests.LoginTests">
+        <methods>
+          <include name="invalidLoginTest"/>
+          <include name="validLoginTest"/>
+        </methods>
+      </class> <!-- com.ssk.orangehrm.tests.LoginTests -->
+      <class name="com.ssk.orangehrm.tests.RecruitmentTests">
+        <methods>
+          <include name="addCandidateTest"/>
+        </methods>
+      </class> <!-- com.ssk.orangehrm.tests.RecruitmentTests -->
+      <class name="com.ssk.orangehrm.tests.AdminUserTests">
+        <methods>
+          <include name="testSearchUser"/>
+          <include name="testAddUser"/>
+        </methods>
+      </class> <!-- com.ssk.orangehrm.tests.AdminUserTests -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
