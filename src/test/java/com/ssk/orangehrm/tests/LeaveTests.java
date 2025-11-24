@@ -3,16 +3,16 @@ package com.ssk.orangehrm.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.ssk.orangehrm.base.BaseTest;
+import com.ssk.orangehrm.base.SetupTest;
 import com.ssk.orangehrm.pages.DashboardPage;
 import com.ssk.orangehrm.pages.LeavePage;
 import com.ssk.orangehrm.pages.LoginPage;
 import com.ssk.orangehrm.utils.ConfigReader;
 
-public class LeaveTests extends BaseTest {
+public class LeaveTests extends SetupTest {
 
     @Test(priority = 1, description = "Verify employee can apply for leave")
-    public void applyLeaveTest() {
+    public void applyLeaveTest() throws InterruptedException {
 
         LoginPage login = new LoginPage(driver);
         DashboardPage dashboard = new DashboardPage(driver);
@@ -27,12 +27,8 @@ public class LeaveTests extends BaseTest {
         dashboard.openLeaveModule();
 
         LeavePage leave = new LeavePage(driver);
-
-        leave.openApplyLeave();
-        leave.selectLeaveType("CAN - Personal");
-        leave.enterLeaveDates("2024-12-20", "2024-12-22");
-        leave.enterComment("Automation Leave Request");
-        leave.submitLeave();
+        
+        leave.leaveAssignAction("John", "2025-11-24", "2025-12-24", "this is the personal leave");
 
         // No perfect validation on demo UI → assume success if no error occurs
         Assert.assertTrue(true, "Leave application submission encountered an issue.");

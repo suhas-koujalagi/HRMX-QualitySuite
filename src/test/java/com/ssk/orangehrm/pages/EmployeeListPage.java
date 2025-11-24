@@ -35,6 +35,7 @@ public class EmployeeListPage {
         PageFactory.initElements(driver, this);
     }
 
+    // Emp Search Actions
     public void searchEmployeeByName(String name) {
         employeeNameSearchInput.clear();
         employeeNameSearchInput.sendKeys(name);

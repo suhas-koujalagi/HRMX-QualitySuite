@@ -1,69 +1,65 @@
 package com.ssk.orangehrm.tests;
 
+import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.ssk.orangehrm.base.BaseTest;
+import com.ssk.orangehrm.base.SetupTest;
 import com.ssk.orangehrm.pages.AddEmployeePage;
 import com.ssk.orangehrm.pages.DashboardPage;
 import com.ssk.orangehrm.pages.EmployeeListPage;
 import com.ssk.orangehrm.pages.LoginPage;
 import com.ssk.orangehrm.utils.ConfigReader;
 
-public class PIMTests extends BaseTest {
+public class PIMTests extends SetupTest {
 
-    @Test(priority = 1, description = "Verify adding a new employee")
-    public void addEmployeeTest() throws InterruptedException {
+	@Test(priority = 1, description = "Verify adding a new employee")
+	public void addEmployeeTest() throws InterruptedException {
 
-        LoginPage login = new LoginPage(driver);
-        DashboardPage dashboard = new DashboardPage(driver);
+		LoginPage login = new LoginPage(driver);
+		DashboardPage dashboard = new DashboardPage(driver);
 
-        driver.get(ConfigReader.getProperty("baseUrl"));
-        login.enterUsername(ConfigReader.getProperty("username"));
-        login.enterPassword(ConfigReader.getProperty("password"));
-        login.clickLogin();
+		driver.get(ConfigReader.getProperty("baseUrl"));
+		login.loginUser(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
-        Assert.assertTrue(dashboard.isDashboardLoaded(), "Dashboard did not load.");
+		Assert.assertTrue(dashboard.isDashboardLoaded(), "Dashboard did not load.");
 
-        dashboard.openPIMModule();
+		dashboard.openPIMModule();
 
-        EmployeeListPage pim = new EmployeeListPage(driver);
-        pim.clickAddEmployee();
+		EmployeeListPage pim = new EmployeeListPage(driver);
+		pim.clickAddEmployee();
 
-        AddEmployeePage addEmp = new AddEmployeePage(driver);
+		AddEmployeePage addEmp = new AddEmployeePage(driver);
 
-        String fName = "Auto" + System.currentTimeMillis();
-        addEmp.enterEmployeeDetails(fName, "Test", "User", "ID" + System.currentTimeMillis());
-        addEmp.saveEmployee();
+		String fName = "Auto" + System.currentTimeMillis();
+		addEmp.enterEmployeeDetails(fName, "Test", "User", "ID" + new Random().nextInt(1000));
+		addEmp.saveEmployee();
 
-        Thread.sleep(2000);
+		Thread.sleep(4000);
 
-        dashboard.openPIMModule();
+		dashboard.openPIMModule();
 
-        pim.searchEmployeeByName(fName);
+		pim.searchEmployeeByName(fName);
 
-        Assert.assertTrue(pim.isEmployeeFound(), "Employee not found in the list!");
-    }
+		Assert.assertTrue(pim.isEmployeeFound(), "Employee not found in the list!");
+	}
 
-    @Test(priority = 2, description = "Verify searching an employee")
-    public void searchEmployeeTest() {
+	@Test(priority = 2, description = "Verify searching an employee")
+	public void searchEmployeeTest() {
 
-        LoginPage login = new LoginPage(driver);
-        DashboardPage dashboard = new DashboardPage(driver);
+		LoginPage login = new LoginPage(driver);
+		DashboardPage dashboard = new DashboardPage(driver);
 
-        driver.get(ConfigReader.getProperty("baseUrl"));
-        login.enterUsername(ConfigReader.getProperty("username"));
-        login.enterPassword(ConfigReader.getProperty("password"));
-        login.clickLogin();
+		driver.get(ConfigReader.getProperty("baseUrl"));
+		login.loginUser(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
-        Assert.assertTrue(dashboard.isDashboardLoaded(), "Dashboard did not load.");
+		Assert.assertTrue(dashboard.isDashboardLoaded(), "Dashboard did not load.");
 
-        dashboard.openPIMModule();
+		dashboard.openPIMModule();
 
-        EmployeeListPage pim = new EmployeeListPage(driver);
-        pim.searchEmployeeByName("Linda");
+		EmployeeListPage pim = new EmployeeListPage(driver);
+		pim.searchEmployeeByName("Linda");
 
-        Assert.assertTrue(pim.isEmployeeFound(), "Employee not found in search!");
-    }
+		Assert.assertTrue(pim.isEmployeeFound(), "Employee not found in search!");
+	}
 }
 

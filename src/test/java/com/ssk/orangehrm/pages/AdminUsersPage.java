@@ -1,94 +1,138 @@
 package com.ssk.orangehrm.pages;
 
+import java.util.Random;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 public class AdminUsersPage {
 
-    private WebDriver driver;
+	private WebDriver driver;
+	private static int id;
+	
+	// System Section Search fields
+	@FindBy(xpath = "//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']")
+	private WebElement sysUserName;
 
-    // Search fields
-    @FindBy(xpath = "//label[text()='Username']/../following-sibling::div/input")
-    private WebElement usernameSearchInput;
+	@FindBy(xpath = "//button[@type='submit']")
+	private WebElement serachButton;
 
-    @FindBy(xpath = "//label[text()='User Role']/../following-sibling::div//div[contains(@class,'oxd-select-text-input')]")
-    private WebElement userRoleDropdown;
+	// Table row to verify Searched user found
+	@FindBy(xpath = "//div[@class='oxd-table-card']")
+	private WebElement userTableRow;
 
-    @FindBy(xpath = "//label[text()='Status']/../following-sibling::div//div[contains(@class,'oxd-select-text-input')]")
-    private WebElement statusDropdown;
+	@FindBy(xpath = "//div[@role='rowgroup']")
+	private WebElement tableRecord;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement searchButton;
+	//Adding User by admin
+	@FindBy(xpath = "//button[normalize-space()='Add']")
+	private WebElement addNewEmpButton; 
 
-    @FindBy(xpath = "//button[text()=' Reset ']")
-    private WebElement resetButton;
+	@FindBy(xpath = "//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]")
+	private WebElement newEmpRole;
 
-    // Add user button
-    @FindBy(xpath = "//button[normalize-space()='Add']")
-    private WebElement addUserButton;
+	@FindBy(xpath = "//input[@placeholder='Type for hints...']")
+	private WebElement newEmpName;
 
-    // Add user form
-    @FindBy(xpath = "//label[text()='User Role']/../following-sibling::div//div[contains(@class,'oxd-select-text-input')]")
-    private WebElement addUserRole;
+	@FindBy(xpath = "//div[3]//div[1]//div[2]//div[1]//div[1]//div[1]")
+	private WebElement newEmpStatus;
 
-    @FindBy(xpath = "//input[@placeholder='Type for hints...']")
-    private WebElement employeeNameInput;
+	@FindBy(xpath = "//div[@class='oxd-form-row']//div[@class='oxd-grid-2 orangehrm-full-width-grid']//div[@class='oxd-grid-item oxd-grid-item--gutters']//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']")
+	private WebElement newEmpUserName;
 
-    @FindBy(xpath = "//label[text()='Status']/../following-sibling::div//div[contains(@class,'oxd-select-text-input')]")
-    private WebElement addStatus;
+	@FindBy(xpath = "//div[@class='oxd-grid-item oxd-grid-item--gutters user-password-cell']//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@type='password']")
+	private WebElement newEmpPassowrd;
 
-    @FindBy(xpath = "//label[text()='Username']/../following-sibling::div/input")
-    private WebElement newUsernameInput;
+	@FindBy(xpath = "//div[@class='oxd-grid-item oxd-grid-item--gutters']//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@type='password']")
+	private WebElement newEmpConfirmPassword;
 
-    @FindBy(xpath = "//label[text()='Password']/../following-sibling::div/input")
-    private WebElement newPasswordInput;
+	@FindBy(xpath = "//button[normalize-space()='Save']")
+	private WebElement newEmpsaveButton;
 
-    @FindBy(xpath = "//label[text()='Confirm Password']/../following-sibling::div/input")
-    private WebElement confirmPasswordInput;
+	// Constructure
+	public AdminUsersPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+		
+		//creating the unique username for test purpose
+		Random random = new Random();
+		int id = random.nextInt(100);
+	}
 
-    @FindBy(xpath = "//button[normalize-space()='Save']")
-    private WebElement saveUserButton;
+	// Actions for search 
+	public void searchByUsername(String username) {
+		sysUserName.clear();
+		sysUserName.sendKeys(username);
+		serachButton.click();
+	}
 
-    // Table row
-    @FindBy(xpath = "//div[@class='oxd-table-card']")
-    private WebElement userTableRow;
+	// to verify user exists or not
+	public boolean isUserFound() {
+		try {
+			return tableRecord.isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public AdminUsersPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
+	// New User add option by Admin
+	public void clickAddUser() {
+		addNewEmpButton.click();
+	}
 
-    // Actions
-    public void searchByUsername(String username) {
-        usernameSearchInput.clear();
-        usernameSearchInput.sendKeys(username);
-        searchButton.click();
-    }
+	// actions to fill new user details
+	public void enterNewEmpRole(String role) throws InterruptedException {
+		Thread.sleep(4000);
+		newEmpRole.click();
+		Actions actions = new Actions(driver);
+		actions.sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).build().perform();
+	}
 
-    public boolean isUserFound() {
-        try {
-            return userTableRow.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	public void enterNewEmpName(String name) throws InterruptedException {
+		newEmpName.sendKeys(name);
+		Thread.sleep(4000);
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).build().perform();
 
-    public void clickAddUser() {
-        addUserButton.click();
-    }
+	}
 
-    public void enterNewUserDetails(String empName, String username, String password) {
-        employeeNameInput.sendKeys(empName);
-        newUsernameInput.sendKeys(username);
-        newPasswordInput.sendKeys(password);
-        confirmPasswordInput.sendKeys(password);
-    }
+	public void enterNewEmpStatus(String status) {
+		newEmpStatus.sendKeys(status);
+	}
 
-    public void saveUser() {
-        saveUserButton.click();
-    }
+	public void enterNewEmpUserName(String username) {
+		username += id;
+		newEmpUserName.sendKeys(username);
+	}
+
+	public void enterNewEmpPassword(String passsword) {
+		passsword += id;
+		newEmpPassowrd.sendKeys(passsword);
+	}
+
+	public void enterNewEmpConfirmPassword(String passsword) {
+		passsword += id;
+		newEmpConfirmPassword.sendKeys(passsword);
+	}
+
+
+	public void enterNewUserDetails(String role,String name, String status, String username, String password) throws InterruptedException {
+		enterNewEmpRole(role);
+		enterNewEmpName(name);
+		enterNewEmpStatus(status);
+		enterNewEmpUserName(username);
+		enterNewEmpPassword(password);
+		enterNewEmpConfirmPassword(password);
+		Thread.sleep(4000);
+	}
+
+	// save action to add new user
+	public void saveUser() {
+		newEmpsaveButton.click();
+	}
 }
 

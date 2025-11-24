@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.ssk.orangehrm.tests.AdminUserTests">
+      <class name="com.ssk.orangehrm.tests.LeaveTests">
         <methods>
           <include name="tearDown"/>
           <include name="setup"/>
-          <include name="testAddUser"/>
+          <include name="applyLeaveTest"/>
         </methods>
-      </class> <!-- com.ssk.orangehrm.tests.AdminUserTests -->
+      </class> <!-- com.ssk.orangehrm.tests.LeaveTests -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

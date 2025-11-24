@@ -7,51 +7,58 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-    private WebDriver driver;
+	private WebDriver driver;
 
-    // Locators
-    @FindBy(name = "username")
-    private WebElement usernameInput;
+	// Locators
+	@FindBy(name = "username")
+	private WebElement usernameInput;
 
-    @FindBy(name = "password")
-    private WebElement passwordInput;
+	@FindBy(name = "password")
+	private WebElement passwordInput;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement loginBtn;
+	@FindBy(xpath = "//button[@type='submit']")
+	private WebElement loginBtn;
 
-    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")
-    private WebElement errorMsg;
+	@FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")
+	private WebElement errorMsg;
 
-    // Constructor
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
+	// Constructor
+	public LoginPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
 
-    // Actions
-    public void enterUsername(String username) {
-        usernameInput.clear();
-        usernameInput.sendKeys(username);
-    }
+	// Actions
+	public void enterUsername(String username) {
+		usernameInput.clear();
+		usernameInput.sendKeys(username);
+	}
 
-    public void enterPassword(String password) {
-        passwordInput.clear();
-        passwordInput.sendKeys(password);
-    }
+	public void enterPassword(String password) {
+		passwordInput.clear();
+		passwordInput.sendKeys(password);
+	}
 
-    public void clickLogin() {
-        loginBtn.click();
-    }
-    
-    // check for invalid credential
-    public boolean isLoginErrorVisible() {
-        try {
-            return errorMsg.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    
-    
+	public void clickLogin() {
+		loginBtn.click();
+	}
+
+	// check for invalid credential
+	public boolean isLoginErrorVisible() {
+		try {
+			return errorMsg.isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	// single action to use login for other test cases
+	public void loginUser(String username, String password) {
+		enterUsername(username);
+		enterPassword(password);
+		clickLogin();
+	}
+
+
 }
 
