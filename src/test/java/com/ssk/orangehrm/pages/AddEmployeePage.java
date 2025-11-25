@@ -25,10 +25,20 @@ public class AddEmployeePage {
     private WebElement saveEmployeeBtn;
 
     public AddEmployeePage(WebDriver driver) {
-        this.driver = driver;
+        this.setDriver(driver);
         PageFactory.initElements(driver, this);
     }
 
+    //setter and getter for driver instance
+    public WebDriver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+    
+	// Actions
     public void enterEmployeeDetails(String first, String middle, String last, String id) {
         firstNameInput.sendKeys(first);
         middleNameInput.sendKeys(middle);
@@ -40,5 +50,7 @@ public class AddEmployeePage {
     public void saveEmployee() {
         saveEmployeeBtn.click();
     }
+	
 }
+
 

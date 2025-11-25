@@ -33,6 +33,9 @@ public class LeavePage {
 	@FindBy(xpath = "//button[normalize-space()='Assign']")
 	private WebElement assignButton;
 
+	@FindBy(xpath = "//button[normalize-space()='Ok']")
+	private WebElement confirmButton;
+
 	public LeavePage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -60,21 +63,32 @@ public class LeavePage {
 	}
 
 	public void enterfromDate(String fromDateIn) {
+		fromDate.click();
+		fromDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		fromDate.sendKeys(Keys.DELETE);
 		fromDate.sendKeys(fromDateIn);
 	}
 
 	public void enterToDate(String toDateIn) throws InterruptedException {
-		toDate.clear();
-		toDate.sendKeys(toDateIn);
+		toDate.click();       // focus
+		toDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));  // select all
+		toDate.sendKeys(Keys.DELETE); // clear properly
+		toDate.sendKeys(toDateIn);       // now enter
+		Thread.sleep(500);
 	}
 
 	public void enterComment(String comment) {
 		comments.sendKeys(comment);
-		
+
 	}
 
 	public void assignLeave() {
 		assignButton.click();	
+	}
+
+	public void confirmLeave() throws InterruptedException {
+		Thread.sleep(3000);
+		confirmButton.click();
 	}
 
 	public void leaveAssignAction(String name, String fdate, String tdate, String comma) throws InterruptedException {
@@ -85,6 +99,8 @@ public class LeavePage {
 		enterToDate(tdate);
 		enterComment(comma);
 		assignLeave();
+		Thread.sleep(4000);
+		confirmLeave();
 		Thread.sleep(4000);
 	}
 }

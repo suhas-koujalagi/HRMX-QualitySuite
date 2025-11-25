@@ -3,16 +3,16 @@ package com.ssk.orangehrm.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.ssk.orangehrm.base.BaseTest;
-import com.ssk.orangehrm.pages.RecruitmentPage;
-import com.ssk.orangehrm.utils.ConfigReader;
+import com.ssk.orangehrm.base.SetupTest;
 import com.ssk.orangehrm.pages.DashboardPage;
 import com.ssk.orangehrm.pages.LoginPage;
+import com.ssk.orangehrm.pages.RecruitmentPage;
+import com.ssk.orangehrm.utils.ConfigReader;
 
-public class RecruitmentTests extends BaseTest {
+public class RecruitmentTests extends SetupTest {
 
     @Test(priority = 1, description = "Verify adding a new candidate")
-    public void addCandidateTest() {
+    public void addCandidateTest() throws InterruptedException {
 
         LoginPage login = new LoginPage(driver);
         DashboardPage dashboard = new DashboardPage(driver);
@@ -32,6 +32,7 @@ public class RecruitmentTests extends BaseTest {
         recruit.clickAddCandidate();
         recruit.enterCandidateDetails("Auto", "Candidate", "auto" + System.currentTimeMillis() + "@gmail.com");
         recruit.saveCandidate();
+        Thread.sleep(2000);
 
         Assert.assertTrue(true, "Candidate creation process hit an issue.");
     }

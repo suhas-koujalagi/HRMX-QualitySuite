@@ -16,7 +16,8 @@ public class AdminUserTests extends SetupTest {
 
 		LoginPage login = new LoginPage(driver);
 		DashboardPage dashboard = new DashboardPage(driver);
-
+		
+		//Admin login
 		driver.get(ConfigReader.getProperty("baseUrl"));
 		login.loginUser(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
